@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Armed and Dangerous!</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    video {
+      max-width: 960px;
+      max-height: 540px;
+      border: 2px solid white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    img.button {
+      margin-top: 20px;
+      cursor: pointer;
+      width: 150px;
+      height: auto;
+    }
+
+    #infoButton {
+      position: fixed;
+      bottom: 0px;
+      right: 0px;
+      width: 150px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    #close_button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      color: black;
+    }
+
+    #info_textbox {
+      position: fixed; /* Fixed position relative to the viewport */
+      top: 50%; /* Position at 50% from the top */
+      left: 50%; /* Position at 50% from the left */
+      transform: translate(-50%, -50%); /* Center it perfectly */
+      width: 80vw; /* 80% of the viewport width */
+      height: 60vh; /* 60% of the viewport height */
+      cursor: default; /* Default cursor */
+      z-index: 1001; /* Ensure it appears above other elements */
+      border-radius: 10px; /* Optional rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow */
+      background-color: white; /* Optional background color */
+    }
+
+
+
+
+    #overlay {
+      display: none; /* Hidden initially */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+      z-index: 999;
+    }
+
+    #info_container {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+  <img src="title.png" alt="Armed and Dangerous!" style="width: 550px; height: auto;">
+  <video id="randomVideo" controls autoplay>
+    <source id="videoSource" src="" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <img id="refreshButton" src="again_button.png" alt="AGAIN!" class="button">
+  <img id="infoButton" src="info_button.png" alt="info" class="button">
+
+  <div id="overlay"></div>
+
+  <div id="info_container">
+    <span id="close_button">&times;</span>
+    <img id="info_textbox" src="info_textbox.png" alt="Info Textbox">
+  </div>
+
+  <audio id="soundEffect" src="sound_effect.mp3"></audio>
+
+  <script>
+    // Array of video URLs
+    const videos = [
+      'videos/video2.mp4',
+      'videos/video3.mp4',
+      'videos/video4.mp4',
+      'videos/video5.mp4',
+      'videos/video6.mp4',
+      'videos/video7.mp4',
+      'videos/video8.mp4'
+    ];
+
+    // Select a random video
+
+    const randomIndex = Math.floor(Math.random() * videos.length);
+    const randomVideo = videos[randomIndex];
+
+    // Set the video source
+    document.getElementById('videoSource').src = randomVideo;
+    document.getElementById('randomVideo').load();
+
+    // Refresh button reloads the page
+    document.getElementById('refreshButton').addEventListener('click', () => {
+      location.reload();
+      document.getElementById('soundEffect').play();
+    });
+
+    // Play sound effect 1 second after the page loads
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('soundEffect').play();
+      }, 10); // 1000 milliseconds = 1 second
+    };
+
+    // Get elements
+    const infoButton = document.getElementById('infoButton'); // Corrected ID
+    const infoContainer = document.getElementById('info_container');
+    const closeButton = document.getElementById('close_button');
+    const overlay = document.getElementById('overlay');
+
+    // Show the info textbox when the info button is clicked
+    infoButton.addEventListener('click', () => {
+      infoContainer.style.display = 'block';
+      overlay.style.display = 'block';
+    });
+
+    // Close the info textbox when the close button is clicked
+    closeButton.addEventListener('click', () => {
+      infoContainer.style.display = 'none';
+      overlay.style.display = 'none';
+    });
+
+    // Close the info textbox if the overlay is clicked
+    overlay.addEventListener('click', () => {
+      infoContainer.style.display = 'none';
+      overlay.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
